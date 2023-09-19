@@ -1,2 +1,2 @@
 # ImageProcessingGUI
-GUI shell for [image processing library](https://github.com/artem-burashnikov/ImageProcessing)
+GUI shell for [image processing library](https://artem-burashnikov.github.io/ImageProcessing/)
