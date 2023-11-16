@@ -2,8 +2,62 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="900"
         x:Class="ImageProcessingGUI.MainWindow"
+        MinWidth="640"
+        MinHeight="480"
+        MaxWidth="1600"
+        MaxHeight="900"
         Title="ImageProcessingGUI">
-    Welcome to Avalonia!
+    
+    <Window.Styles>
+        <Style Selector="MenuItem">
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+    </Window.Styles>
+    
+    <DockPanel
+        Background="Gray">
+        <Menu DockPanel.Dock="Top"
+              Background="Black">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open..." />
+                <MenuItem Header="_Save..." />
+                <MenuItem Header="Save As..." />
+                <Separator/>
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="Filters">
+                    <MenuItem Header="Blur" />
+                    <MenuItem Header="Edges" />
+                    <MenuItem Header="Laplacian" />
+                    <MenuItem Header="High Pass" />
+                    <MenuItem Header="Vertical Sobel" />
+                </MenuItem>
+                <MenuItem Header="_Restore">
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Processing Unit">
+                <MenuItem Header="CPU">
+                    <MenuItem.Icon>
+                        <CheckBox 
+                            BorderThickness="0"
+                            IsHitTestVisible="False">
+                        </CheckBox>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="GPU">
+                    <MenuItem.Icon>
+                        <CheckBox 
+                            BorderThickness="0"
+                            IsHitTestVisible="False">
+                        </CheckBox>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <DockPanel/>
+    </DockPanel>
+
 </Window>
