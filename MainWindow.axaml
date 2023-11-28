@@ -15,11 +15,11 @@
             <Setter Property="FontSize" Value="18" />
         </Style>
     </Window.Styles>
-    
-    <DockPanel
-        Background="Gray">
-        <Menu DockPanel.Dock="Top"
-              Background="Black">
+
+    <StackPanel>
+        <Menu 
+            Foreground="#aeb6bf"
+              Background="#a9cce3  ">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open..." />
                 <MenuItem Header="_Save..." />
@@ -27,16 +27,12 @@
                 <Separator/>
                 <MenuItem Header="_Exit" />
             </MenuItem>
-            <MenuItem Header="_Edit">
-                <MenuItem Header="Filters">
-                    <MenuItem Header="Blur" />
-                    <MenuItem Header="Edges" />
-                    <MenuItem Header="Laplacian" />
-                    <MenuItem Header="High Pass" />
-                    <MenuItem Header="Vertical Sobel" />
-                </MenuItem>
-                <MenuItem Header="_Restore">
-                </MenuItem>
+            <MenuItem Header="Filters">
+                <MenuItem Header="Blur" />
+                <MenuItem Header="Edges" />
+                <MenuItem Header="Laplacian" />
+                <MenuItem Header="High Pass" />
+                <MenuItem Header="Vertical Sobel" />
             </MenuItem>
             <MenuItem Header="Processing Unit">
                 <MenuItem Header="CPU">
@@ -56,8 +52,10 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="_Resest" />
+            <MenuItem Header="_About" />
         </Menu>
-        <DockPanel/>
-    </DockPanel>
-
+        <Panel Height="800" Background="Red"></Panel> <!-- Temporary -->
+        <Panel Height="50" Background="GreenYellow"></Panel>  <!-- Temporary -->
+    </StackPanel>
 </Window>
