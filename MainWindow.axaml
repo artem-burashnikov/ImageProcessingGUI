@@ -15,47 +15,52 @@
             <Setter Property="FontSize" Value="18" />
         </Style>
     </Window.Styles>
-
+<Panel>
     <StackPanel>
         <Menu 
             Foreground="#aeb6bf"
               Background="#a9cce3  ">
             <MenuItem Header="_File">
-                <MenuItem Header="_Open..." />
-                <MenuItem Header="_Save..." />
-                <MenuItem Header="Save As..." />
-                <Separator/>
-                <MenuItem Header="_Exit" />
+                <MenuItem Click="OpenButtonClick" Header="Open..." />
+                <MenuItem Click="SaveButtonClick" Header="Save..." />
             </MenuItem>
             <MenuItem Header="Filters">
-                <MenuItem Header="Blur" />
-                <MenuItem Header="Edges" />
-                <MenuItem Header="Laplacian" />
-                <MenuItem Header="High Pass" />
-                <MenuItem Header="Vertical Sobel" />
+                <MenuItem Click="FilterImage" Header="Blur" />
+                <MenuItem Click="FilterImage" Header="Edges" />
+                <MenuItem Click="FilterImage" Header="Laplacian" />
+                <MenuItem Click="FilterImage" Header="High Pass" />
+                <MenuItem Click="FilterImage" Header="Vertical Sobel" />
+            </MenuItem>
+            <MenuItem Header="Rotate">
+                <MenuItem Click="RotateImage" Header="Clockwise" />
+                <MenuItem Click="RotateImage" Header="Counter-Clockwise" />
+            </MenuItem>
+            <MenuItem Header="Reflect">
+                <MenuItem Click="ReflectImage" Header="Horizontally" />
+                <MenuItem Click="ReflectImage" Header="Vertically" />
             </MenuItem>
             <MenuItem Header="Processing Unit">
-                <MenuItem Header="CPU">
-                    <MenuItem.Icon>
-                        <CheckBox 
-                            BorderThickness="0"
-                            IsHitTestVisible="False">
-                        </CheckBox>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="GPU">
-                    <MenuItem.Icon>
-                        <CheckBox 
-                            BorderThickness="0"
-                            IsHitTestVisible="False">
-                        </CheckBox>
-                    </MenuItem.Icon>
-                </MenuItem>
+                <RadioButton Click="ChangeProcessingUnit" GroupName="Mode">GPU</RadioButton>
+                <RadioButton Click="ChangeProcessingUnit" GroupName="Mode">CPU</RadioButton>
+            </MenuItem>   
+            <MenuItem Click="ResetChanges" Header="Reset" />
+            <MenuItem Header="About">
+                <TextBlock>MIT License Copyright (c) 2023 Artem Burashnikov</TextBlock>
             </MenuItem>
-            <MenuItem Header="_Resest" />
-            <MenuItem Header="_About" />
         </Menu>
-        <Panel Height="800" Background="Red"></Panel> <!-- Temporary -->
-        <Panel Height="50" Background="GreenYellow"></Panel>  <!-- Temporary -->
+        <Image Name="Image" Height="850" Source="/Assets/cat_minimal.jpg"></Image>
     </StackPanel>
+    <Border Name="InputPath" IsVisible="False" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="300">
+        <StackPanel>
+            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Watermark="Insert path to open image"></TextBox>
+            <Button Click="LoadImage" Width="100" Height="40" Background="Black">Ok</Button>
+        </StackPanel>
+    </Border>
+    <Border Name="OutputPath" IsVisible="False" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="300">
+        <StackPanel>
+            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Watermark="Insert path to save image"></TextBox>
+            <Button Click="SaveImage" Width="100" Height="40" Background="Black">Ok</Button>
+        </StackPanel>
+    </Border>
+    </Panel>
 </Window>
