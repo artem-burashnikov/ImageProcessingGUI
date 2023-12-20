@@ -35,7 +35,9 @@ type MainWindow () as this =
         
         async {return applicator sourceImage}
         
-    do this.InitializeComponent()
+    do
+        System.IO.Directory.CreateDirectory(tmpPath) |> ignore            
+        this.InitializeComponent()
         
     member this.LoadImage(sender: obj, args: RoutedEventArgs) =
         // Build a file picker Task
