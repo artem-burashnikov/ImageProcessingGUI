@@ -1,28 +1,32 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="900"
-        x:Class="ImageProcessingGUI.MainWindow"
-        MinWidth="640"
-        MinHeight="480"
-        MaxWidth="1600"
-        MaxHeight="900"
-        Title="ImageProcessingGUI">
-    
+<Window
+    MaxHeight="900"
+    MaxWidth="1600"
+    MinHeight="480"
+    MinWidth="640"
+    Title="ImageProcessingGUI"
+    d:DesignHeight="900"
+    d:DesignWidth="1600"
+    mc:Ignorable="d"
+    x:Class="ImageProcessingGUI.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
     <Window.Styles>
         <Style Selector="MenuItem">
             <Setter Property="FontSize" Value="18" />
         </Style>
     </Window.Styles>
-<Panel>
-    <StackPanel>
-        <Menu 
-            Foreground="#aeb6bf"
-              Background="#a9cce3  ">
+
+    <DockPanel>
+        <Menu
+            Background="#a9cce3  "
+            DockPanel.Dock="Top"
+            Foreground="#aeb6bf">
             <MenuItem Header="_File">
-                <MenuItem Click="OpenButtonClick" Header="Open..." />
-                <MenuItem Click="SaveButtonClick" Header="Save..." />
+                <MenuItem Click="LoadImage" Header="_Open..." />
+                <MenuItem Click="SaveImage" Header="_Save..." />
             </MenuItem>
             <MenuItem Header="Filters">
                 <MenuItem Click="FilterImage" Header="Blur" />
@@ -42,25 +46,18 @@
             <MenuItem Header="Processing Unit">
                 <RadioButton Click="ChangeProcessingUnit" GroupName="Mode">GPU</RadioButton>
                 <RadioButton Click="ChangeProcessingUnit" GroupName="Mode">CPU</RadioButton>
-            </MenuItem>   
-            <MenuItem Click="ResetChanges" Header="Reset" />
+            </MenuItem>
+            <MenuItem Click="ResetChanges" Header="_Reset" />
             <MenuItem Header="About">
                 <TextBlock>MIT License Copyright (c) 2023 Artem Burashnikov</TextBlock>
             </MenuItem>
         </Menu>
-        <Image Name="Image" Height="850" Source="/Assets/cat_minimal.jpg"></Image>
-    </StackPanel>
-    <Border Name="InputPath" IsVisible="False" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="300">
-        <StackPanel>
-            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Watermark="Insert path to open image"></TextBox>
-            <Button Click="LoadImage" Width="100" Height="40" Background="Black">Ok</Button>
-        </StackPanel>
-    </Border>
-    <Border Name="OutputPath" IsVisible="False" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="300">
-        <StackPanel>
-            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Watermark="Insert path to save image"></TextBox>
-            <Button Click="SaveImage" Width="100" Height="40" Background="Black">Ok</Button>
-        </StackPanel>
-    </Border>
-    </Panel>
+        <ScrollViewer>
+            <Image
+                Margin="30,10,30,10"
+                MaxHeight="800"
+                MaxWidth="1500"
+                Name="Image" />
+        </ScrollViewer>
+    </DockPanel>
 </Window>
