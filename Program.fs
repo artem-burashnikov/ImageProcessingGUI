@@ -5,8 +5,8 @@ open Avalonia
 
 module Program =
 
-    [<CompiledName "BuildAvaloniaApp">] 
-    let buildAvaloniaApp () = 
+    [<CompiledName "BuildAvaloniaApp">]
+    let buildAvaloniaApp () =
         AppBuilder
             .Configure<App>()
             .UsePlatformDetect()
@@ -15,4 +15,11 @@ module Program =
 
     [<EntryPoint; STAThread>]
     let main argv =
-        buildAvaloniaApp().StartWithClassicDesktopLifetime(argv)
+        let tmpPath = System.IO.Path.Combine([| __SOURCE_DIRECTORY__; "Assets"; ".temp" |])
+        System.IO.Directory.CreateDirectory(tmpPath) |> ignore
+
+        try
+            buildAvaloniaApp().StartWithClassicDesktopLifetime(argv)
+        finally
+            Array.iter System.IO.File.Delete (ImageProcessing.Streaming.listAllFiles (tmpPath))
+            System.IO.Directory.Delete(tmpPath)
