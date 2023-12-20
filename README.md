@@ -82,3 +82,4 @@ The project is licensed under a [MIT License][license-url].
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/artem-burashnikov/ImageProcessingGUI.svg?style=for-the-badge&color=blue
 [license-url]: LICENSE
+[avalonia-ui-url]: https://github.com/avaloniaui/avalonia
