@@ -25,7 +25,7 @@ type MainWindow() as this =
     let processFile (runStrategy: RunStrategy) transformation =
         let applicator =
             let ensuredRunStrategy = if GPUDevice.noGPU () then CPU else runStrategy
-            
+
             if ensuredRunStrategy = CPU then
                 getTsfCPU 1 transformation
             else
@@ -83,11 +83,13 @@ type MainWindow() as this =
             if storage.Count >= 1 then
                 try
                     let dir = storage[0].TryGetLocalPath()
+
                     let name =
                         if System.IO.File.Exists(System.IO.Path.Combine(dir, globImage.Name)) then
-                            String.concat "_" [DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"); globImage.Name]
+                            String.concat "_" [ DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"); globImage.Name ]
                         else
                             globImage.Name
+
                     printfn $"%A{name}"
                     HelpProviders.saveImage globImage (System.IO.Path.Combine(dir, name))
                 with _ ->
@@ -107,26 +109,17 @@ type MainWindow() as this =
 
     member this.ApplyTransformation(sender: obj, args: RoutedEventArgs) =
         let sender = sender :?> MenuItem
-        
+
         let transformation =
-            if sender.Name = "Blur" then
-                Blur
-            elif sender.Name = "Edges" then
-                Edges
-            elif sender.Name = "Laplacian" then
-                Laplacian
-            elif sender.Name = "High-Pass" then
-                HighPass
-            elif sender.Name = "Vertical-Sobel" then
-                SobelV
-            elif sender.Name = "Clockwise" then
-                Rotate
-            elif sender.Name = "Counter-Clockwise" then
-                RotateCCW
-            elif sender.Name = "Horizontally" then
-                ReflectH
-            else
-                ReflectV
+            if sender.Name = "Blur" then Blur
+            elif sender.Name = "Edges" then Edges
+            elif sender.Name = "Laplacian" then Laplacian
+            elif sender.Name = "High-Pass" then HighPass
+            elif sender.Name = "Vertical-Sobel" then SobelV
+            elif sender.Name = "Clockwise" then Rotate
+            elif sender.Name = "Counter-Clockwise" then RotateCCW
+            elif sender.Name = "Horizontally" then ReflectH
+            else ReflectV
 
         let outPath = System.IO.Path.Combine(tmpPath, globImage.Name)
 

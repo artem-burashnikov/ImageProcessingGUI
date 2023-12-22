@@ -29,23 +29,61 @@
                 <MenuItem Click="SaveImage" Header="_Save..." />
             </MenuItem>
             <MenuItem Header="Filters">
-                <MenuItem Name="Blur" Click="ApplyTransformation" Header="Blur" />
-                <MenuItem Name="Edges" Click="ApplyTransformation" Header="Edges" />
-                <MenuItem Name="Laplacian" Click="ApplyTransformation" Header="Laplacian" />
-                <MenuItem Name="High-Pass" Click="ApplyTransformation" Header="High-Pass" />
-                <MenuItem Name="Vertical-Sobel" Click="ApplyTransformation" Header="Vertical-Sobel" />
+                <MenuItem
+                    Click="ApplyTransformation"
+                    Header="Blur"
+                    Name="Blur" />
+                <MenuItem
+                    Click="ApplyTransformation"
+                    Header="Edges"
+                    Name="Edges" />
+                <MenuItem
+                    Click="ApplyTransformation"
+                    Header="Laplacian"
+                    Name="Laplacian" />
+                <MenuItem
+                    Click="ApplyTransformation"
+                    Header="High-Pass"
+                    Name="High-Pass" />
+                <MenuItem
+                    Click="ApplyTransformation"
+                    Header="Vertical-Sobel"
+                    Name="Vertical-Sobel" />
             </MenuItem>
             <MenuItem Header="Rotate">
-                <MenuItem Name="Clockwise" Click="ApplyTransformation" Header="Clockwise" />
-                <MenuItem Name="Counter-Clockwise" Click="ApplyTransformation" Header="Counter-Clockwise" />
+                <MenuItem
+                    Click="ApplyTransformation"
+                    Header="Clockwise"
+                    Name="Clockwise" />
+                <MenuItem
+                    Click="ApplyTransformation"
+                    Header="Counter-Clockwise"
+                    Name="Counter-Clockwise" />
             </MenuItem>
             <MenuItem Header="Reflect">
-                <MenuItem Name="Horizontally" Click="ApplyTransformation" Header="Horizontally" />
-                <MenuItem Name="Vertically" Click="ApplyTransformation" Header="Vertically" />
+                <MenuItem
+                    Click="ApplyTransformation"
+                    Header="Horizontally"
+                    Name="Horizontally" />
+                <MenuItem
+                    Click="ApplyTransformation"
+                    Header="Vertically"
+                    Name="Vertically" />
             </MenuItem>
-            <MenuItem Name="Processing-Strategy" Header="Processing-Strategy">
-                <RadioButton Name="CPU" GroupName="Mode" Checked="ChangeRunStrategy" IsChecked="True">CPU</RadioButton>
-                <RadioButton Name="GPU" GroupName="Mode" Checked="ChangeRunStrategy">GPU</RadioButton>
+            <MenuItem Header="Processing-Strategy" Name="Processing-Strategy">
+                <RadioButton
+                    Checked="ChangeRunStrategy"
+                    GroupName="Mode"
+                    IsChecked="True"
+                    Name="CPU">
+                    CPU
+                </RadioButton>
+                <RadioButton
+                    Checked="ChangeRunStrategy"
+                    GroupName="Mode"
+                    Name="GPU">
+                    GPU
+                </RadioButton>
             </MenuItem>
             <MenuItem Click="ResetChanges" Header="_Reset" />
             <MenuItem Header="About">
