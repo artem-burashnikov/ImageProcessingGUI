@@ -2,6 +2,7 @@
 
 open System
 open Avalonia
+open ImageProcessingGUI.Definitions
 
 module Program =
 
@@ -15,7 +16,6 @@ module Program =
 
     [<EntryPoint; STAThread>]
     let main argv =
-        let tmpPath = System.IO.Path.Combine([| __SOURCE_DIRECTORY__; "Assets"; ".temp" |])
         System.IO.Directory.CreateDirectory(tmpPath) |> ignore
 
         try

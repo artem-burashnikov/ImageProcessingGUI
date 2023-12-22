@@ -19,11 +19,11 @@
         </Style>
     </Window.Styles>
 
-    <DockPanel>
+    <DockPanel Background="Lavender">
         <Menu
-            Background="#a9cce3  "
+            Background="Gray"
             DockPanel.Dock="Top"
-            Foreground="#aeb6bf">
+            Foreground="Black">
             <MenuItem Header="_File">
                 <MenuItem Click="LoadImage" Header="_Open..." />
                 <MenuItem Click="SaveImage" Header="_Save..." />

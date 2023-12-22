@@ -1,5 +1,6 @@
 namespace ImageProcessingGUI
 
+open System
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Markup.Xaml
@@ -9,28 +10,28 @@ open ImageProcessing
 open ImageProcessing.ImageProcessing
 open ImageProcessing.Transformation
 open ImageProcessing.RunStrategy
+open ImageProcessingGUI.Definitions
 open Avalonia.Media.Imaging
 
 type MainWindow() as this =
     inherit Window()
 
-    let tmpPath = System.IO.Path.Combine([| __SOURCE_DIRECTORY__; "Assets"; ".temp" |])
+    let mutable globImage = HelpProviders.Image([||], 0, 0, "")
 
-    let mutable sourceImage = HelpProviders.Image([||], 0, 0, "")
-
-    let mutable sourceImagePath = ""
+    let mutable globImagePath = ""
 
     let mutable runStrategy = CPU
 
     let processFile (runStrategy: RunStrategy) transformation =
         let applicator =
             let ensuredRunStrategy = if GPUDevice.noGPU () then CPU else runStrategy
+            
+            if ensuredRunStrategy = CPU then
+                getTsfCPU 1 transformation
+            else
+                getTsfGPU GPUDevice.context GPUDevice.localWorkSize transformation
 
-            match ensuredRunStrategy with
-            | CPU -> getTsfCPU 1 transformation
-            | _ -> getTsfGPU GPUDevice.context GPUDevice.localWorkSize transformation
-
-        async { return applicator sourceImage }
+        async { return applicator globImage }
 
     do this.InitializeComponent()
 
@@ -54,8 +55,8 @@ type MainWindow() as this =
                     let filePath = fileSeq[0].TryGetLocalPath()
 
                     // Load imported image into memory for easy Reset.
-                    sourceImage <- HelpProviders.loadAsImage filePath
-                    sourceImagePath <- filePath
+                    globImage <- HelpProviders.loadAsImage filePath
+                    globImagePath <- filePath
 
                     let imageControl = this.FindControl<Image>("Image")
 
@@ -82,7 +83,13 @@ type MainWindow() as this =
             if storage.Count >= 1 then
                 try
                     let dir = storage[0].TryGetLocalPath()
-                    HelpProviders.saveImage sourceImage (System.IO.Path.Combine(dir, sourceImage.Name))
+                    let name =
+                        if System.IO.File.Exists(System.IO.Path.Combine(dir, globImage.Name)) then
+                            String.concat "_" [DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"); globImage.Name]
+                        else
+                            globImage.Name
+                    printfn $"%A{name}"
+                    HelpProviders.saveImage globImage (System.IO.Path.Combine(dir, name))
                 with _ ->
                     ()
         }
@@ -90,52 +97,51 @@ type MainWindow() as this =
 
     member this.ResetChanges(sender: obj, args: RoutedEventArgs) =
         try
-            sourceImage <- HelpProviders.loadAsImage sourceImagePath
+            globImage <- HelpProviders.loadAsImage globImagePath
 
             let imageControl = this.FindControl<Image>("Image")
 
-            imageControl.Source <- new Bitmap(sourceImagePath)
+            imageControl.Source <- new Bitmap(globImagePath)
         with exc ->
             ()
 
     member this.ApplyTransformation(sender: obj, args: RoutedEventArgs) =
+        let sender = sender :?> MenuItem
+        
         let transformation =
-            match sender with
-            | :? MenuItem as menuItem ->
-                match menuItem.Name with
-                | "Blur" -> Blur
-                | "Edges" -> Edges
-                | "Laplacian" -> Laplacian
-                | "High-Pass" -> HighPass
-                | "Vertical-Sobel" -> SobelV
-                | "Clockwise" -> Rotate
-                | "Counter-Clockwise" -> RotateCCW
-                | "Horizontally" -> ReflectH
-                | "Vertically" -> ReflectV
-                | _ -> failwith ""
-            | _ -> failwith ""
+            if sender.Name = "Blur" then
+                Blur
+            elif sender.Name = "Edges" then
+                Edges
+            elif sender.Name = "Laplacian" then
+                Laplacian
+            elif sender.Name = "High-Pass" then
+                HighPass
+            elif sender.Name = "Vertical-Sobel" then
+                SobelV
+            elif sender.Name = "Clockwise" then
+                Rotate
+            elif sender.Name = "Counter-Clockwise" then
+                RotateCCW
+            elif sender.Name = "Horizontally" then
+                ReflectH
+            else
+                ReflectV
 
-        let outPath = System.IO.Path.Combine(tmpPath, sourceImage.Name)
+        let outPath = System.IO.Path.Combine(tmpPath, globImage.Name)
 
         task {
             let! newImage = processFile runStrategy transformation
-            sourceImage <- newImage
-            HelpProviders.saveImage sourceImage outPath
-
+            globImage <- newImage
+            HelpProviders.saveImage globImage outPath
             this.FindControl<Image>("Image").Source <- new Bitmap(outPath)
         }
         |> Async.AwaitTask
         |> Async.StartImmediate
 
     member this.ChangeRunStrategy(sender: obj, args: RoutedEventArgs) =
-        runStrategy <-
-            match sender with
-            | :? RadioButton as radioButton ->
-                match radioButton.Name with
-                | "CPU" -> CPU
-                | "GPU" -> GPU
-                | _ -> failwith ""
-            | _ -> failwith ""
+        let sender = sender :?> RadioButton
+        runStrategy <- if sender.Name = "GPU" then GPU else CPU
 
     member private this.InitializeComponent() =
 #if DEBUG
